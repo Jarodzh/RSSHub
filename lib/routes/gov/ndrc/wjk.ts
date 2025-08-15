@@ -8,9 +8,9 @@ export const route: Route = {
     path: '/ndrc/wjk/:year?/:type?',
     name: '文件库',
     example: '/gov/ndrc/wjk',
-    parameters: { 
-        year: '年份，见下表，默认为全部', 
-        type: '文件类型，见下表，默认为全部' 
+    parameters: {
+        year: '年份，见下表，默认为全部',
+        type: '文件类型，见下表，默认为全部',
     },
     maintainers: ['Jarodzh'],
     categories: ['government'],
@@ -61,13 +61,13 @@ async function handler(ctx) {
 
     // 文件类型映射
     const typeMapping = {
-        '发展改革委令': 'fzggwl',
-        '规范性文件': 'gfxwj',
-        '公告': 'gg',
-        '规划文本': 'ghwb',
-        '通知': 'tz',
-        '政策解读': 'zcjd',
-        '其他': 'qt',
+        发展改革委令: 'fzggwl',
+        规范性文件: 'gfxwj',
+        公告: 'gg',
+        规划文本: 'ghwb',
+        通知: 'tz',
+        政策解读: 'zcjd',
+        其他: 'qt',
     };
 
     // 构建查询参数
@@ -94,7 +94,7 @@ async function handler(ctx) {
     }
 
     const apiUrl = 'https://fwfx.ndrc.gov.cn/api/query';
-    
+
     const params = {
         qt: '', // 查询关键字，默认为空
         tab, // 文件类型
@@ -113,7 +113,7 @@ async function handler(ctx) {
         searchParams: params,
         headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Referer': 'https://www.ndrc.gov.cn/',
+            Referer: 'https://www.ndrc.gov.cn/',
         },
     });
 
@@ -132,7 +132,7 @@ async function handler(ctx) {
                     const { data: detailResponse } = await got(item.url);
                     const cheerio = await import('cheerio');
                     const $ = cheerio.load(detailResponse);
-                    
+
                     // 尝试获取更详细的内容
                     const contentSelectors = ['.TRS_Editor', '.article_con', '.content', '.main-content', 'div[class*="content"]'];
                     for (const selector of contentSelectors) {
@@ -142,7 +142,7 @@ async function handler(ctx) {
                             break;
                         }
                     }
-                    
+
                     if (content) {
                         description = content;
                     }
